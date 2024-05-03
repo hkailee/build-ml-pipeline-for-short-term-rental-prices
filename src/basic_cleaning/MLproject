@@ -6,27 +6,27 @@ entry_points:
     parameters:
 
       input_artifact:
-        description: "Fully-qualified name for the input artifact"
+        description: Fully-qualified name for the input artifact
         type: string
 
       output_artifact:
-        description: "Name for the output artifact"
+        description: Name for the output artifact
         type: string
 
       output_type:
-        description: "Type for the artifact"
+        description: Type for the artifact
         type: string
 
       output_description:
-        description: "Description for the artifact"
+        description: Description for the artifact
         type: string
 
       min_price:
-        description: "Minimum price to consider"
+        description: Minimum price to consider
         type: string
 
       max_price:
-        description: "Maximum price to consider"
+        description: Maximum price to consider
         type: string
 
 
