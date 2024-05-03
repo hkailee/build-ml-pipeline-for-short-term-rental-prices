@@ -13,6 +13,9 @@ logger = logging.getLogger()
 
 
 def go(args):
+    """
+    Run the data cleaning process
+    """
 
     run = wandb.init(job_type="basic_cleaning")
     run.config.update(args)
@@ -23,19 +26,20 @@ def go(args):
     logger.info("Reading data")
     df = pd.read_csv(artifact_local_path)
 
-    logger.info("Cleaning data")
     # filter out rows where price is outside of the bounds
+    logger.info("Cleaning data")
     df['price'] = df['price'].astype(float)
     df = df[(df['price'] >= args.min_price) & (df['price'] <= args.max_price)]
 
-    logger.info("Drop rows in the dataset that are not in the proper geolocation.")
     # drop rows in the dataset that are not in the proper geolocation (to fix sample2.csv)
+    logger.info("Drop rows in the dataset that are not in the proper geolocation.")
     idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
     df = df[idx].copy()
 
     # Convert last_review to datetime
     df['last_review'] = pd.to_datetime(df['last_review'])
 
+    # Save the cleaned data to a new artifact  
     filename = "clean_sample.csv"
     df.to_csv(filename, index=False)
 
